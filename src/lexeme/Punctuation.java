@@ -1,6 +1,6 @@
 package lexeme;
 
-public class Punctuation {
+public class Punctuation implements WordPunct{
     private char data;
 
     public Punctuation(char data) {
