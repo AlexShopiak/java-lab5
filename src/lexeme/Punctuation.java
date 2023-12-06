@@ -1,13 +1,14 @@
 package lexeme;
 
-public class Punctuation implements WordPunct{
-    private char data;
+class Punctuation implements WordPunct{
+    private String mark;
 
-    public Punctuation(char data) {
-        this.data = data;
+    Punctuation(String input) {
+        this.mark = input;
     }
 
-    public char get() {
-        return data;
+    @Override
+    public String join() {
+        return mark;
     }
 }
