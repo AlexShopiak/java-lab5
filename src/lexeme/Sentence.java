@@ -1,13 +1,38 @@
 package lexeme;
 
-public class Sentence{
-    private WordPunct[] data;
+import java.util.ArrayList;
 
-    public Sentence(WordPunct[] data) {
-        this.data = data;
+class Sentence{
+    private ArrayList<WordPunct> wordPuncts;
+
+    Sentence(String input) {
+        wordPuncts = new ArrayList<>();
+        parse(input);
     }
 
-    public WordPunct[] get() {
-        return data;
+    void parse(String input) {
+        input = input.replaceAll("([.,!?:;-])", " $1");
+        String[] list = input.split("\\s+");
+
+        for(String elem : list) {
+            if (elem.matches("[.,!?:;-]")) {
+                wordPuncts.add(new Punctuation(elem));
+            } else {
+                wordPuncts.add(new Word(elem));
+            }
+        }
+    }
+
+    String join() {
+        String output = "";
+
+        for (WordPunct wp : wordPuncts) {
+            if (wp instanceof Word) {
+                output = output.concat(" ");
+            }
+            output = output.concat(wp.join());
+        }
+
+        return output.substring(1);
     }
 }
