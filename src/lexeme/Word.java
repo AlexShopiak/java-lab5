@@ -1,13 +1,29 @@
 package lexeme;
 
-public class Word implements WordPunct{
-    private Letter[] data;
+import java.util.ArrayList;
 
-    public Word(Letter[] data) {
-        this.data = data;
+class Word implements WordPunct{
+    private ArrayList<Letter> letters;
+
+    Word(String input) {
+        letters = new ArrayList<>();
+        parse(input);
     }
 
-    public Letter[] get() {
-        return data;
+    void parse(String input) {
+        String[] list = input.split("");
+        for (String elem : list) {
+            letters.add(new Letter(elem));
+        }
+    }
+
+    @Override
+    public String join() {
+        String output = "";
+
+        for (Letter letter : letters) {
+            output = output.concat(letter.join());
+        }
+        return output;
     }
 }
