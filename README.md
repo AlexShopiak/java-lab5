@@ -7,7 +7,7 @@
 
 
 ### Як зібрати та запустити проєкт
-- Зберіть проєкт <code>javac src/Main.java src/util/*.java</code>
+- Зберіть проєкт <code>javac src/Main.java src/util/*.java src/lexeme/*.java</code>
 - Запустіть проєкт <code>java -cp src Main</code>
 
 ### Примітки
