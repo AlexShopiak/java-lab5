@@ -1,3 +1,5 @@
-public interface WordPunct {
+package lexeme;
 
+interface WordPunct {
+    String join();
 }
