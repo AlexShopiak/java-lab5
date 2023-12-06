@@ -1,13 +1,13 @@
 package lexeme;
 
-public class Letter {
-    private char data;
+class Letter {
+    private String letter;
 
-    public Letter(char data) {
-        this.data = data;
+    Letter(String input) {
+        this.letter = input;
     }
 
-    public char get() {
-        return data;
+    String join() {
+        return letter;
     }
 }
