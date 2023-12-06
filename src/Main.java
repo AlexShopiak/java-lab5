@@ -1,22 +1,24 @@
 import util.Inquirer;
-import util.Converter;
+import lexeme.Text;
 import util.Calculator;
 
 public class Main {
 
     public static void main(String[] args) {
-        String inputStr = Inquirer.inquire();
-        Text inputText = Converter.strToText(inputStr);
+        String input = Inquirer.inquire();
+        Text text = new Text(input);
 
-        Text outputText = Calculator.calculate(inputText);
-        String outputStr = Converter.textToStr(outputText);
+        Calculator.calculate(text);
 
-        printStr("Output", output);
-        System.out.println();
+        String output = text.get();
+
+        print("Output", output); 
     }
 
-    private static void printStr(String title, String text) {
+    private static void print(String title, String text) {
         //Bold title and nonbold text
-        System.out.println("\n\u001B[1m" + title + ": \u001B[0m" + text);
+        System.out.println();
+        System.out.println("\u001B[1m" + title + ": \u001B[0m" + text);
+        System.out.println();
     }
 }
