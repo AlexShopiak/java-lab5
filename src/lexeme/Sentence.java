@@ -21,7 +21,7 @@ class Sentence{
         }
     }
 
-    void setSentence(ArrayList<WordPunct> sent) {
+    void set(ArrayList<WordPunct> sent) {
         wordPuncts = sent;
     }
 
