@@ -13,31 +13,35 @@ public class Text{
         }
     }
 
-    public void toUniqueWords() {
+    public void toWords() {
         ArrayList<WordPunct> words = new ArrayList<>();
 
         for (Sentence sent : sentences) {
             sent.removePuncts();
             words.addAll(sent.get());
         }
-
-        Iterator<WordPunct> iterator = words.iterator();
-        ArrayList<String> uniqueWords = new ArrayList<>();
-
-        while (iterator.hasNext()) {
-            WordPunct word = iterator.next();
-            if (containsCaseIgn(uniqueWords, word.join())) {
-                iterator.remove();
-            } else {
-                uniqueWords.add(word.join());
-            }
-        }
         
         Sentence single = new Sentence("");
-        single.setSentence(words);
+        single.set(words);
 
         sentences.clear();
         sentences.add(single);
+    }
+
+    public void unifyWords() {
+        for (Sentence sent : sentences) {
+            Iterator<WordPunct> iterator = sent.get().iterator();
+            ArrayList<String> uniqueWords = new ArrayList<>();
+
+            while (iterator.hasNext()) {
+                WordPunct word = iterator.next();
+                if (containsCaseIgn(uniqueWords, word.join())) {
+                    iterator.remove();
+                } else {
+                    uniqueWords.add(word.join());
+                }
+            }
+        }
     }
 
     public void sortWords() {
