@@ -1,32 +1,55 @@
 package lexeme;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Text{
     private ArrayList<Sentence> sentences;
-    private boolean isEmpty = true;
 
     public Text(String input) {
         sentences = new ArrayList<>();
         if (input.length() > 0) {
             parse(input);
-            isEmpty = false;
         }
     }
-    public Word create() {
-        return new Word("aboba");
+
+    public void toUniqueWords() {
+        ArrayList<WordPunct> words = new ArrayList<>();
+
+        for (Sentence sent : sentences) {
+            sent.removePuncts();
+            words.addAll(sent.get());
+        }
+
+        Iterator<WordPunct> iterator = words.iterator();
+        ArrayList<String> uniqueWords = new ArrayList<>();
+
+        while (iterator.hasNext()) {
+            WordPunct word = iterator.next();
+            if (uniqueWords.contains(word.join())) {
+                iterator.remove();
+            } else {
+                uniqueWords.add(word.join());
+            }
+        }
+        
+        Sentence single = new Sentence("");
+        single.setSentence(words);
+
+        sentences.clear();
+        sentences.add(single);
     }
 
-    public String get() {
-        if (isEmpty) {
+    public void sortWords() {
+        //todo
+    }
+
+    public String getString() {
+        if (sentences.size() == 0) {
             return "";
         } else {
             return join();
         }
-    }
-
-    public boolean isEmpty() {
-        return isEmpty;
     }
 
     private void parse(String input) {
@@ -41,8 +64,8 @@ public class Text{
         String output = "";
 
         for (Sentence sent : sentences) {
-            output = output.concat(" ");
-            output = output.concat(sent.join());
+            output += " ";
+            output += sent.join();
         }
 
         return output.substring(1);
