@@ -26,7 +26,7 @@ public class Text{
 
         while (iterator.hasNext()) {
             WordPunct word = iterator.next();
-            if (uniqueWords.contains(word.join())) {
+            if (containsCaseIgn(uniqueWords, word.join())) {
                 iterator.remove();
             } else {
                 uniqueWords.add(word.join());
@@ -69,5 +69,9 @@ public class Text{
         }
 
         return output.substring(1);
+    }
+
+    private boolean containsCaseIgn(ArrayList<String> list, String item) {
+        return list.stream().anyMatch(element -> element.equalsIgnoreCase(item));
     }
 }
