@@ -2,6 +2,7 @@ package lexeme;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Comparator;
 
 public class Text{
     private ArrayList<Sentence> sentences;
@@ -12,7 +13,7 @@ public class Text{
             parse(input);
         }
     }
-
+    //-----------Public-------------------------------//
     public void toWords() {
         ArrayList<WordPunct> words = new ArrayList<>();
 
@@ -45,7 +46,16 @@ public class Text{
     }
 
     public void sortWords() {
-        //todo
+        for (Sentence sent : sentences) {
+            if (sent.get().size() > 1) {
+                sent.get().sort(new Comparator<WordPunct>() {
+                    @Override
+                    public int compare(WordPunct word1, WordPunct word2) {
+                        return word1.join().compareToIgnoreCase(word2.join());
+                    }
+                });
+            }
+        }
     }
 
     public String getString() {
@@ -55,7 +65,7 @@ public class Text{
             return join();
         }
     }
-
+    //----------Private-------------------------------//
     private void parse(String input) {
         String[] arr = input.split("(?<=[.!?])\\s");
 
