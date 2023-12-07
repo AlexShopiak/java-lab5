@@ -6,9 +6,9 @@ public class Main {
         String input = Console.inquire();
 
         Text text = new Text(input);
-        Text unique = text.getUniqueWords();
-        Text sorted = unique.getSortedWords();
-        String output = sorted.getString();
+        text.toUniqueWords();
+        text.sortWords();
+        String output = text.getString();
 
         Console.printTitled("Output", output); 
     }
