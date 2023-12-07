@@ -10,13 +10,6 @@ class Word implements WordPunct{
         parse(input);
     }
 
-    void parse(String input) {
-        String[] list = input.split("");
-        for (String elem : list) {
-            letters.add(new Letter(elem));
-        }
-    }
-
     @Override
     public String join() {
         String output = "";
@@ -25,5 +18,12 @@ class Word implements WordPunct{
             output = output.concat(letter.join());
         }
         return output;
+    }
+
+    private void parse(String input) {
+        String[] list = input.split("");
+        for (String elem : list) {
+            letters.add(new Letter(elem));
+        }
     }
 }
