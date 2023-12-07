@@ -6,7 +6,8 @@ public class Main {
         String input = Console.inquire();
 
         Text text = new Text(input);
-        text.toUniqueWords();
+        text.toWords();
+        text.unifyWords();
         text.sortWords();
         String output = text.getString();
 
