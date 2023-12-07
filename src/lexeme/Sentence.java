@@ -1,6 +1,7 @@
 package lexeme;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 class Sentence{
     private ArrayList<WordPunct> wordPuncts;
@@ -10,17 +11,22 @@ class Sentence{
         parse(input);
     }
 
-    void parse(String input) {
-        input = input.replaceAll("([.,!?:;-])", " $1");
-        String[] list = input.split("\\s+");
-
-        for(String elem : list) {
-            if (elem.matches("[.,!?:;-]")) {
-                wordPuncts.add(new Punctuation(elem));
-            } else {
-                wordPuncts.add(new Word(elem));
+    void removePuncts() {
+        Iterator<WordPunct> iterator = wordPuncts.iterator();
+        while (iterator.hasNext()) {
+            WordPunct wp = iterator.next();
+            if (wp instanceof Punctuation) {
+                iterator.remove();
             }
         }
+    }
+
+    void setSentence(ArrayList<WordPunct> sent) {
+        wordPuncts = sent;
+    }
+
+    ArrayList<WordPunct> get() {
+        return wordPuncts;
     }
 
     String join() {
@@ -34,5 +40,18 @@ class Sentence{
         }
 
         return output.substring(1);
+    }
+
+    private void parse(String input) {
+        input = input.replaceAll("([.,!?:;-])", " $1");
+        String[] list = input.split("\\s+");
+
+        for(String elem : list) {
+            if (elem.matches("[.,!?:;-]")) {
+                wordPuncts.add(new Punctuation(elem));
+            } else {
+                wordPuncts.add(new Word(elem));
+            }
+        }
     }
 }
