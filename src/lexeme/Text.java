@@ -76,13 +76,16 @@ public class Text{
 
     private String join() {
         String output = "";
-
         for (Sentence sent : sentences) {
             output += " ";
             output += sent.join();
         }
 
-        return output.substring(1);
+        if (output.length() > 0) {
+            return output.substring(1);
+        } else {
+            return output;
+        }
     }
 
     private boolean containsCaseIgn(ArrayList<String> list, String item) {

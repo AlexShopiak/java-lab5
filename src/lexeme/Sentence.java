@@ -39,7 +39,11 @@ class Sentence{
             output = output.concat(wp.join());
         }
 
-        return output.substring(1);
+        if (output.length() > 0) {
+            return output.substring(1);
+        } else {
+            return output;
+        }
     }
 
     private void parse(String input) {
