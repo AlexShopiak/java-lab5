@@ -1,24 +1,15 @@
-import util.Inquirer;
+import util.Console;
 import lexeme.Text;
-import util.Calculator;
 
 public class Main {
-
     public static void main(String[] args) {
-        String input = Inquirer.inquire();
+        String input = Console.inquire();
+
         Text text = new Text(input);
+        Text unique = text.getUniqueWords();
+        Text sorted = unique.getSortedWords();
+        String output = sorted.getString();
 
-        Calculator.calculate(text);
-
-        String output = text.get();
-
-        print("Output", output); 
-    }
-
-    private static void print(String title, String text) {
-        //Bold title and nonbold text
-        System.out.println();
-        System.out.println("\u001B[1m" + title + ": \u001B[0m" + text);
-        System.out.println();
+        Console.printTitled("Output", output); 
     }
 }
