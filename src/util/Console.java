@@ -1,3 +1,13 @@
+/*
+ * Console
+ *
+ * Version 1.0
+ *
+ * (c) 2023 Oleksii Shopiak
+ * All rights reserved.
+ *
+ * This class contains some allias of interacting with System IO
+ */
 package util;
 
 import java.util.Scanner;

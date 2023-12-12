@@ -7,8 +7,8 @@
 
 
 ### Як зібрати та запустити проєкт
-- Зберіть проєкт <code>javac src/Main.java src/util/*.java src/lexeme/*.java</code>
-- Запустіть проєкт <code>java -cp src Main</code>
+- Зберіть проєкт <code>javac -d classes src/Main.java src/util/*.java src/lexeme/*.java</code>
+- Запустіть проєкт <code>java -cp classes Main</code>
 
 ### Примітки
 - Трактування дії: Вивести усі слова тексту в алфавітному порядку без дубляжів

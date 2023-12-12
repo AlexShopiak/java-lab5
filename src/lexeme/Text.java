@@ -1,71 +1,46 @@
+/*
+ * Text
+ *
+ * Version 1.0
+ *
+ * (c) 2023 Oleksii Shopiak
+ * All rights reserved.
+ *
+ * Text class has an array of sentences
+ */
 package lexeme;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Comparator;
 
-public class Text{
-    private ArrayList<Sentence> sentences;
+class Text{
+    private ArrayList<Sentence> sentences = new ArrayList<>();
 
-    public Text(String input) {
-        sentences = new ArrayList<>();
+    Text(String input) {    
         if (input.length() > 0) {
             parse(input);
         }
     }
-    //-----------Public-------------------------------//
-    public void toWords() {
-        ArrayList<WordPunct> words = new ArrayList<>();
+
+    ArrayList<Sentence> get() {
+        return sentences;
+    }
+
+    String join() {
+        String output = "";
 
         for (Sentence sent : sentences) {
-            sent.removePuncts();
-            words.addAll(sent.get());
+            output += " ";
+            output += sent.join();
         }
-        
-        Sentence single = new Sentence("");
-        single.set(words);
 
-        sentences.clear();
-        sentences.add(single);
+        if (output.length() > 0) {
+            output = output.substring(1);
+        }
+
+        return output;
     }
 
-    public void unifyWords() {
-        for (Sentence sent : sentences) {
-            Iterator<WordPunct> iterator = sent.get().iterator();
-            ArrayList<String> uniqueWords = new ArrayList<>();
-
-            while (iterator.hasNext()) {
-                WordPunct word = iterator.next();
-                if (containsCaseIgn(uniqueWords, word.join())) {
-                    iterator.remove();
-                } else {
-                    uniqueWords.add(word.join());
-                }
-            }
-        }
-    }
-
-    public void sortWords() {
-        for (Sentence sent : sentences) {
-            if (sent.get().size() > 1) {
-                sent.get().sort(new Comparator<WordPunct>() {
-                    @Override
-                    public int compare(WordPunct word1, WordPunct word2) {
-                        return word1.join().compareToIgnoreCase(word2.join());
-                    }
-                });
-            }
-        }
-    }
-
-    public String getString() {
-        if (sentences.size() == 0) {
-            return "";
-        } else {
-            return join();
-        }
-    }
-    //----------Private-------------------------------//
     private void parse(String input) {
         String[] arr = input.split("(?<=[.!?])\\s");
 
@@ -73,22 +48,125 @@ public class Text{
             sentences.add(new Sentence(elem));
         }
     }
+}
 
-    private String join() {
+
+/*
+ * Sentence class has an array of words and punctuation marks
+ */
+class Sentence{
+    private ArrayList<WordPunct> wordPuncts = new ArrayList<>();
+
+    Sentence(String input) {
+        parse(input);
+    }
+
+    void set(ArrayList<WordPunct> sent) {
+        wordPuncts = sent;
+    }
+
+    ArrayList<WordPunct> get() {
+        return wordPuncts;
+    }
+
+    String join() {
         String output = "";
-        for (Sentence sent : sentences) {
-            output += " ";
-            output += sent.join();
+
+        for (WordPunct wp : wordPuncts) {
+            if (wp instanceof Word) {
+                output = output.concat(" ");
+            }
+            output = output.concat(wp.join());
         }
 
         if (output.length() > 0) {
-            return output.substring(1);
-        } else {
-            return output;
+            output = output.substring(1);
         }
+
+        return output;
     }
 
-    private boolean containsCaseIgn(ArrayList<String> list, String item) {
-        return list.stream().anyMatch(element -> element.equalsIgnoreCase(item));
+    private void parse(String input) {
+        input = input.replaceAll("([.,!?:;-])", " $1");
+        String[] list = input.split("\\s+");
+
+        for(String elem : list) {
+            if (elem.matches("[.,!?:;-]")) {
+                wordPuncts.add(new Punctuation(elem));
+            } else {
+                wordPuncts.add(new Word(elem));
+            }
+        }
+    }
+}
+
+
+/* 
+ * WordPunct interface descripes Word and Punctuation classes
+ */
+interface WordPunct {
+    String join();
+}
+
+
+/*
+ * Punctuation class describes one punctuation mark
+ */
+class Punctuation implements WordPunct{
+    private String mark;
+
+    Punctuation(String input) {
+        this.mark = input;
+    }
+
+    @Override
+    public String join() {
+        return mark;
+    }
+}
+
+
+/*
+ * Word class has an array of letters
+ */
+class Word implements WordPunct{
+    private ArrayList<Letter> letters;
+
+    Word(String input) {
+        letters = new ArrayList<>();
+        parse(input);
+    }
+
+    @Override
+    public String join() {
+        String output = "";
+
+        for (Letter letter : letters) {
+            output = output.concat(letter.join());
+        }
+        return output;
+    }
+
+    private void parse(String input) {
+        String[] list = input.split("");
+        for (String elem : list) {
+            letters.add(new Letter(elem));
+        }
+    }
+}
+
+
+/*
+ * Letter class describes one letter
+ */
+class Letter {
+    private String letter;
+
+    Letter(String input) {
+        this.letter = input;
+    }
+
+    String join() {
+        return letter;
     }
 }
